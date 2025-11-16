@@ -1,0 +1,3106 @@
+
+window.onload = function() {
+  // Build a system
+  var url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = window.location.origin;
+  }
+  var options = {
+  "swaggerDoc": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Jelpifai",
+      "version": "1.0.0",
+      "description": "Documentación de la API"
+    },
+    "paths": {
+      "openapi": {
+        "0": "3",
+        "1": ".",
+        "2": "0",
+        "3": ".",
+        "4": "0"
+      },
+      "info": {
+        "title": "Jelpifay API",
+        "version": "1.0.0",
+        "description": "API para el sistema de ayuda comunitaria Jelpifay"
+      },
+      "servers": {
+        "0": {
+          "url": "/api/v1",
+          "description": "API base path"
+        }
+      },
+      "/usuario": {
+        "post": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Crear usuario",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Usuario creado"
+            },
+            "403": {
+              "description": "Error al crear usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/usuario/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "delete": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Eliminar usuario",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario eliminado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error al eliminar usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/me": {
+        "get": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Obtener perfil del usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Datos del usuario actual",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "nombre": {
+                            "type": "string"
+                          },
+                          "apellido": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "telefono": {
+                            "type": "string"
+                          },
+                          "puntos": {
+                            "type": "object"
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error al obtener usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Actualizar perfil del usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre": {
+                      "type": "string"
+                    },
+                    "apellido": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "telefono": {
+                      "type": "string"
+                    },
+                    "indicativo_pais_id": {
+                      "type": "integer"
+                    },
+                    "change_password": {
+                      "type": "string",
+                      "enum": [
+                        "0",
+                        "1"
+                      ]
+                    },
+                    "contrasena_antigua": {
+                      "type": "string"
+                    },
+                    "contrasena": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al actualizar usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/me/notificaciones": {
+        "get": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Obtener notificaciones del usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de notificaciones",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error al obtener notificaciones",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/me/estadisticas": {
+        "get": {
+          "tags": [
+            "Usuarios"
+          ],
+          "summary": "Obtener estadísticas del usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Estadísticas del usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error al obtener estadísticas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Iniciar sesión",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auth"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Login exitoso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error de autenticación",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login/recuperar": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Recuperar contraseña - Enviar email de recuperación",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    }
+                  },
+                  "required": [
+                    "email"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Email de recuperación enviado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Error al enviar email",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login/cambiar_contrasena": {
+        "post": {
+          "tags": [
+            "Auth"
+          ],
+          "summary": "Cambiar contraseña usando token de recuperación",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_id_encrypted": {
+                      "type": "string"
+                    },
+                    "contrasena": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "user_id_encrypted",
+                    "contrasena"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contraseña actualizada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al actualizar contraseña",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/indicativo_pais": {
+        "get": {
+          "tags": [
+            "Indicativos País"
+          ],
+          "summary": "Listar todos los indicativos de país",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de indicativos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/IndicativoPais"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener indicativos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Indicativos País"
+          ],
+          "summary": "Crear indicativo de país",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicativoPais"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Indicativo creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/IndicativoPais"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al crear indicativo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/indicativo_pais/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Indicativos País"
+          ],
+          "summary": "Obtener indicativo por ID",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Indicativo encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/IndicativoPais"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener indicativo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Indicativos País"
+          ],
+          "summary": "Actualizar indicativo",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicativoPais"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Indicativo actualizado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/IndicativoPais"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al actualizar indicativo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Indicativos País"
+          ],
+          "summary": "Eliminar indicativo",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Indicativo eliminado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/IndicativoPais"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al eliminar indicativo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/producto": {
+        "get": {
+          "tags": [
+            "Productos"
+          ],
+          "summary": "Listar todos los productos activos",
+          "description": "Ruta pública que devuelve todos los productos con activo=1",
+          "responses": {
+            "200": {
+              "description": "Lista de productos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Producto"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener productos",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Productos"
+          ],
+          "summary": "Crear producto",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Producto creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Producto"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al crear producto",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/producto_canjeado": {
+        "post": {
+          "tags": [
+            "Productos Canjeados"
+          ],
+          "summary": "Canjear un producto",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "producto_id": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "producto_id"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Producto canjeado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/ProductoCanjeado"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al canjear producto",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/producto_canjeado/mi": {
+        "get": {
+          "tags": [
+            "Productos Canjeados"
+          ],
+          "summary": "Obtener mis productos canjeados",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de productos canjeados del usuario actual",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "fecha_registro": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "puntos_canjeados": {
+                              "type": "integer"
+                            },
+                            "producto": {
+                              "$ref": "#/components/schemas/Producto"
+                            }
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener productos canjeados",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud": {
+        "post": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Crear solicitud",
+          "description": "Crea una nueva solicitud. Permite subir hasta 10 archivos.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "descripcion": {
+                      "type": "string"
+                    },
+                    "puntos_ofrecidos": {
+                      "type": "integer"
+                    },
+                    "prioridad_solicitud": {
+                      "type": "integer"
+                    },
+                    "metodo_remuneracion_id": {
+                      "type": "integer"
+                    },
+                    "maximo_dias_entrega": {
+                      "type": "integer"
+                    },
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  },
+                  "required": [
+                    "titulo"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Solicitud creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al crear solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/disponibles": {
+        "get": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Obtener solicitudes disponibles",
+          "description": "Obtiene todas las solicitudes disponibles (activo=1, estado=1) que no pertenecen al usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de solicitudes disponibles",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Solicitud"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener solicitudes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/my": {
+        "get": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Obtener mis solicitudes",
+          "description": "Obtiene todas las solicitudes creadas por el usuario actual",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de mis solicitudes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Solicitud"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener solicitudes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/accepted": {
+        "get": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Obtener solicitudes aceptadas",
+          "description": "Obtiene todas las solicitudes donde el usuario actual es el voluntario",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de solicitudes aceptadas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Solicitud"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener solicitudes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Obtener solicitud por ID",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Solicitud encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Actualizar solicitud",
+          "description": "Actualiza una solicitud. Permite subir hasta 10 archivos adicionales.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "titulo": {
+                      "type": "string"
+                    },
+                    "descripcion": {
+                      "type": "string"
+                    },
+                    "puntos_ofrecidos": {
+                      "type": "integer"
+                    },
+                    "prioridad_solicitud": {
+                      "type": "integer"
+                    },
+                    "metodo_remuneracion_id": {
+                      "type": "integer"
+                    },
+                    "maximo_dias_entrega": {
+                      "type": "integer"
+                    },
+                    "files": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Solicitud actualizada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al actualizar solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Eliminar solicitud",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Solicitud eliminada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al eliminar solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/finalizar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "put": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Finalizar solicitud (confirmado por solicitante)",
+          "description": "El solicitante confirma que la solicitud está completada. Otorga puntos al voluntario y cambia el estado a 5 (Puntuación pendiente).",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Solicitud finalizada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al finalizar solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/prefinalizar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "put": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Pre-finalizar solicitud (evidencia aprobada)",
+          "description": "El solicitante aprueba la evidencia. Cambia el estado a 3 (Verificado por solicitante).",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Solicitud pre-finalizada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al pre-finalizar solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/finalizar_por_voluntario/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "put": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Finalizar solicitud por voluntario",
+          "description": "El voluntario finaliza la solicitud. Otorga 1 punto y cambia el estado a 5 (Puntuación pendiente).",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Solicitud finalizada por voluntario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "object"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al finalizar solicitud",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud/calificar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "put": {
+          "tags": [
+            "Solicitudes"
+          ],
+          "summary": "Calificar solicitud",
+          "description": "Califica la solicitud completada. Cambia el estado a 6 (Finalizado).",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "calificacion_voluntario": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 5
+                    },
+                    "comentario_voluntario": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Calificación registrada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Solicitud"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al registrar calificación",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_archivos/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "delete": {
+          "tags": [
+            "Archivos de Solicitud"
+          ],
+          "summary": "Eliminar archivo de solicitud",
+          "description": "Elimina un archivo de solicitud (soft delete: activo=0)",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Archivo eliminado correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudArchivos"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al eliminar archivo",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_metodo_remuneracion": {
+        "post": {
+          "tags": [
+            "Métodos de Remuneración"
+          ],
+          "summary": "Crear método de remuneración",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudMetodoRemuneracion"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Método creado"
+            }
+          }
+        }
+      },
+      "/solicitud_metodo_remuneracion/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Métodos de Remuneración"
+          ],
+          "summary": "Obtener método por ID",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Método encontrado"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Métodos de Remuneración"
+          ],
+          "summary": "Actualizar método",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudMetodoRemuneracion"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Método actualizado"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Métodos de Remuneración"
+          ],
+          "summary": "Eliminar método",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Método eliminado"
+            }
+          }
+        }
+      },
+      "/solicitud_puntos_obtenidos": {
+        "post": {
+          "tags": [
+            "Puntos Obtenidos"
+          ],
+          "summary": "Registrar puntos obtenidos",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudPuntosObtenidos"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Puntos registrados"
+            }
+          }
+        }
+      },
+      "/solicitud_puntos_obtenidos/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Puntos Obtenidos"
+          ],
+          "summary": "Obtener registro de puntos por ID",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Registro encontrado"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Puntos Obtenidos"
+          ],
+          "summary": "Actualizar registro de puntos",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudPuntosObtenidos"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Registro actualizado"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Puntos Obtenidos"
+          ],
+          "summary": "Eliminar registro de puntos",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Registro eliminado"
+            }
+          }
+        }
+      },
+      "/solicitud_mensajes": {
+        "post": {
+          "tags": [
+            "Mensajes"
+          ],
+          "summary": "Crear mensaje",
+          "description": "Crea un nuevo mensaje en una solicitud. El usuario_id se toma automáticamente del token.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "solicitud_id": {
+                      "type": "integer"
+                    },
+                    "mensaje": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "solicitud_id",
+                    "mensaje"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Mensaje creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudMensajes"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al crear mensaje",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_mensajes/{solicitud_id}/mensajes": {
+        "parameters": [
+          {
+            "name": "solicitud_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Mensajes"
+          ],
+          "summary": "Obtener mensajes por solicitud",
+          "description": "Obtiene todos los mensajes de una solicitud específica",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de mensajes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/SolicitudMensajes"
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener mensajes",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta": {
+        "post": {
+          "tags": [
+            "Ofertas"
+          ],
+          "summary": "Crear oferta",
+          "description": "Crea una nueva oferta para una solicitud. El usuario_voluntario_id se toma automáticamente del token.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "solicitud_id": {
+                      "type": "integer"
+                    },
+                    "mensaje_oferta": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "solicitud_id",
+                    "mensaje_oferta"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Oferta creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudOferta"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al crear oferta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta/solicitud/{solicitud_id}": {
+        "parameters": [
+          {
+            "name": "solicitud_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Ofertas"
+          ],
+          "summary": "Obtener ofertas por solicitud",
+          "description": "Obtiene todas las ofertas de una solicitud (aceptado=0 o aceptado=1) con información del usuario y puntuación",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de ofertas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "mensaje_oferta": {
+                              "type": "string"
+                            },
+                            "usuario_voluntario_id": {
+                              "type": "integer"
+                            },
+                            "puntuacion_voluntario": {
+                              "type": "number"
+                            },
+                            "usuario": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener ofertas",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta/aceptar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Ofertas"
+          ],
+          "summary": "Aceptar oferta",
+          "description": "Acepta una oferta. Cambia aceptado=1, actualiza la solicitud a estado=2 y asigna el voluntario.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Oferta aceptada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudOferta"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al aceptar oferta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta/denegar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Ofertas"
+          ],
+          "summary": "Denegar oferta",
+          "description": "Deniega una oferta. Cambia aceptado=2.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Oferta denegada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudOferta"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al denegar oferta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta_evidencia": {
+        "post": {
+          "tags": [
+            "Evidencias de Oferta"
+          ],
+          "summary": "Crear evidencia de solicitud",
+          "description": "Crea una nueva evidencia para una solicitud. Permite subir un archivo.\nEl usuario_voluntario_id se toma automáticamente del token.\nEl tipo por defecto es 1 (voluntario a solicitante), puede ser 2 (solicitante a voluntario).\nEl plazo de descarte se establece automáticamente a 2 días desde la creación.\n",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "solicitud_id": {
+                      "type": "integer"
+                    },
+                    "solicitud_oferta_id": {
+                      "type": "integer"
+                    },
+                    "mensaje": {
+                      "type": "string"
+                    },
+                    "tipo": {
+                      "type": "string",
+                      "enum": [
+                        "1",
+                        "2"
+                      ],
+                      "default": "1"
+                    },
+                    "nombre_archivo": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "required": [
+                    "solicitud_id",
+                    "solicitud_oferta_id",
+                    "mensaje"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Evidencia cargada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudOfertaEvidencia"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al cargar evidencia",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta_evidencia/solicitud/{solicitud_id}": {
+        "parameters": [
+          {
+            "name": "solicitud_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Evidencias de Oferta"
+          ],
+          "summary": "Obtener evidencias por solicitud (tipo 1)",
+          "description": "Obtiene todas las evidencias de tipo 1 (entregado de voluntario a solicitante) de una solicitud",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de evidencias",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "mensaje": {
+                              "type": "string"
+                            },
+                            "nombre_archivo": {
+                              "type": "string"
+                            },
+                            "tipo": {
+                              "type": "integer"
+                            },
+                            "usuario": {
+                              "type": "object"
+                            },
+                            "solicitud": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener evidencias",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta_evidencia/solicitud/{solicitud_id}/solicitante": {
+        "parameters": [
+          {
+            "name": "solicitud_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "tags": [
+            "Evidencias de Oferta"
+          ],
+          "summary": "Obtener evidencias por solicitud (tipo 2)",
+          "description": "Obtiene todas las evidencias de tipo 2 (entregado de solicitante a voluntario) de una solicitud",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de evidencias",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "mensaje": {
+                              "type": "string"
+                            },
+                            "nombre_archivo": {
+                              "type": "string"
+                            },
+                            "tipo": {
+                              "type": "integer"
+                            },
+                            "usuario": {
+                              "type": "object"
+                            },
+                            "solicitud": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al obtener evidencias",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/solicitud_oferta_evidencia/descartar/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "put": {
+          "tags": [
+            "Evidencias de Oferta"
+          ],
+          "summary": "Descartar evidencia",
+          "description": "Descarta una evidencia. Marca evidencia_descartada=1 y establece fecha_descarte.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Evidencia descartada correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": null
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/SolicitudOfertaEvidencia"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al descartar evidencia",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "BearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "schemas": {
+        "Error": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "nullable": true
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "Usuario": {
+          "type": "object",
+          "properties": {
+            "nombre": {
+              "type": "string"
+            },
+            "apellido": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "contrasena": {
+              "type": "string"
+            },
+            "telefono": {
+              "type": "string"
+            },
+            "indicativo_pais_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "nombre",
+            "apellido",
+            "email",
+            "contrasena"
+          ]
+        },
+        "Auth": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "contrasena": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "email",
+            "contrasena"
+          ]
+        },
+        "IndicativoPais": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "codigo": {
+              "type": "integer"
+            },
+            "pais": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "codigo",
+            "pais"
+          ]
+        },
+        "Producto": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "nombre": {
+              "type": "string"
+            },
+            "puntos_requeridos": {
+              "type": "integer"
+            },
+            "activo": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "nombre",
+            "puntos_requeridos"
+          ]
+        },
+        "ProductoCanjeado": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "puntos_canjeados": {
+              "type": "integer"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "usuarioid": {
+              "type": "integer"
+            },
+            "productoid": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "puntos_canjeados",
+            "usuarioid",
+            "productoid"
+          ]
+        },
+        "Solicitud": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "titulo": {
+              "type": "string"
+            },
+            "descripcion": {
+              "type": "string"
+            },
+            "puntos_ofrecidos": {
+              "type": "integer"
+            },
+            "calificacion_voluntario": {
+              "type": "integer"
+            },
+            "comentario_voluntario": {
+              "type": "string"
+            },
+            "fecha_finalizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "prioridad_solicitud": {
+              "type": "integer"
+            },
+            "estado": {
+              "type": "integer"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "usuario_solicitante_id": {
+              "type": "integer"
+            },
+            "usuario_voluntario_id": {
+              "type": "integer"
+            },
+            "metodo_remuneracion_id": {
+              "type": "integer"
+            },
+            "maximo_dias_entrega": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "titulo"
+          ]
+        },
+        "SolicitudArchivos": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "nombre_archivo": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "solicitud_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "nombre_archivo",
+            "solicitud_id"
+          ]
+        },
+        "SolicitudMetodoRemuneracion": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "metodo": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "metodo"
+          ]
+        },
+        "SolicitudPuntosObtenidos": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "tipo": {
+              "type": "string"
+            },
+            "puntos_otorgados": {
+              "type": "integer"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "solicitudid": {
+              "type": "integer"
+            },
+            "usuarioid": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "solicitudid",
+            "usuarioid"
+          ]
+        },
+        "SolicitudMensajes": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "usuario_id": {
+              "type": "integer"
+            },
+            "solicitud_id": {
+              "type": "integer"
+            },
+            "mensaje": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "usuario_id",
+            "solicitud_id",
+            "mensaje"
+          ]
+        },
+        "SolicitudOferta": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "mensaje_oferta": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "aceptado": {
+              "type": "integer"
+            },
+            "fecha_aceptacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_denegacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "usuario_voluntario_id": {
+              "type": "integer"
+            },
+            "solicitud_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "mensaje_oferta",
+            "solicitud_id"
+          ]
+        },
+        "SolicitudOfertaEvidencia": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "fecha_registro": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_actualizacion": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_plazo_descarte": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fecha_descarte": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "usuario_voluntario_id": {
+              "type": "integer"
+            },
+            "solicitud_id": {
+              "type": "integer"
+            },
+            "solicitud_oferta_id": {
+              "type": "integer"
+            },
+            "evidencia_descartada": {
+              "type": "integer"
+            },
+            "mensaje": {
+              "type": "string"
+            },
+            "nombre_archivo": {
+              "type": "string"
+            },
+            "activo": {
+              "type": "integer"
+            },
+            "tipo": {
+              "type": "integer",
+              "description": "1 - Entregado de voluntario a solicitante\n2 - Entregado de solicitante a voluntario\n"
+            }
+          },
+          "required": [
+            "solicitud_id",
+            "solicitud_oferta_id",
+            "mensaje"
+          ]
+        }
+      }
+    },
+    "tags": []
+  },
+  "customOptions": {}
+};
+  url = options.swaggerUrl || url
+  var urls = options.swaggerUrls
+  var customOptions = options.customOptions
+  var spec1 = options.swaggerDoc
+  var swaggerOptions = {
+    spec: spec1,
+    url: url,
+    urls: urls,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  }
+  for (var attrname in customOptions) {
+    swaggerOptions[attrname] = customOptions[attrname];
+  }
+  var ui = SwaggerUIBundle(swaggerOptions)
+
+  if (customOptions.oauth) {
+    ui.initOAuth(customOptions.oauth)
+  }
+
+  if (customOptions.preauthorizeApiKey) {
+    const key = customOptions.preauthorizeApiKey.authDefinitionKey;
+    const value = customOptions.preauthorizeApiKey.apiKeyValue;
+    if (!!key && !!value) {
+      const pid = setInterval(() => {
+        const authorized = ui.preauthorizeApiKey(key, value);
+        if(!!authorized) clearInterval(pid);
+      }, 500)
+
+    }
+  }
+
+  if (customOptions.authAction) {
+    ui.authActions.authorize(customOptions.authAction)
+  }
+
+  window.ui = ui
+}

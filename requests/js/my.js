@@ -142,8 +142,14 @@ const process_requests = (data) => {
             let { fecha_registro }                          = request;
             fecha_registro                                  = new Date(fecha_registro).toLocaleDateString();
 
+
             const oferta_voluntario_actual  = ofertas.filter( ( oferta ) => oferta.usuario_voluntario_id == usuario_voluntario_id && oferta.aceptado == '1' )[0];
-            const { id: oferta_id }         = oferta_voluntario_actual;
+            let oferta_id = 0;
+            if (oferta_voluntario_actual) {
+                const { id: oferta_id_1 }   = oferta_voluntario_actual;
+                oferta_id                   = oferta_id_1;
+            }
+            
 
             const span_status_rq            = span_status(estado); 
             const status_name_1             = status_name(estado); 
