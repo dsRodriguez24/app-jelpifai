@@ -1,0 +1,63 @@
+/* Estilos del chat */
+.chat-history {
+    /* background: #f5f6fa; */
+}
+
+.chat-message {
+    display: flex;
+    align-items: end;
+}
+
+.chat-right {
+    justify-content: flex-end;
+}
+
+.chat-left {
+    justify-content: flex-start;
+}
+
+.chat-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.msg-container {
+    max-width: 75%;
+}
+
+.msg-text {
+    background: #ffffff;
+    padding: 10px 14px;
+    border-radius: 14px;
+    margin-bottom: 6px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.chat-right .msg-text {
+    background: #4e73df;
+    color: white;
+}
+
+.chat-left .msg-text {
+    background: #f5f6fa;
+    color: black;
+}
+
+.msg-time {
+    font-size: 11px;
+    color: #7b7b7b;
+}
+
+.chat-input {
+    background: #fff;
+}
+
+.chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+.chat-history::-webkit-scrollbar-thumb {
+    background: #c7c7c7;
+    border-radius: 4px;
+}

@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On 
+RewriteBase /jelpifai-project/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+Options -Indexes
+RewriteRule ^register$ registro/register.php
+RewriteRule ^logout$ logout.php
+RewriteRule ^forgot_password$ forgot_password.php
+RewriteRule ^change_password$ change_password.php
+
+#Request
+RewriteRule ^request/my$ requests/my.php
+RewriteRule ^request/accepted$ requests/accepted.php
+
+#Store
+RewriteRule ^my/products$ store/my_products.php

@@ -1,0 +1,46 @@
+.card-img-top {
+    width: 100%;          
+    height: 300px;        
+    object-fit: cover;    
+    object-position: center; 
+    border-top-left-radius: 0.5rem; 
+    border-top-right-radius: 0.5rem;
+}
+
+.card-custom {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Contenedor fijo para la imagen */
+.image-container {
+  flex: 0 0 250px; /* ancho fijo */
+  height: 200px;   /* alto fijo */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* recorta la imagen sin deformarla */
+  display: block;
+}
+
+/* En pantallas pequeñas, mantener mismo diseño vertical */
+@media (max-width: 768px) {
+  .image-container {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+
+.image-carrousel {
+    width: 100%;          
+    height: 300px;        
+    object-fit: cover;    
+    object-position: center; 
+    border-top-left-radius: 0.5rem; 
+    border-top-right-radius: 0.5rem;
+}
