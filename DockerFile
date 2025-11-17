@@ -1,12 +1,34 @@
 FROM php:8.2-apache
 
-# Activar mod_rewrite (si lo usas)
+# Railway usa la variable $PORT, no el 80 fijo
+ARG PORT
+ENV PORT=${PORT:-8080}
+
+# Configurar Apache para que escuche $PORT
+RUN sed -i "s/80/\${PORT}/g" /etc/apache2/ports.conf
+RUN sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf
+
+# Activar mod_rewrite
 RUN a2enmod rewrite
 
-# Copiar tu proyecto al servidor Apache
+# Copiar el proyecto
 COPY . /var/www/html/
 
-# Establecer permisos
+# Permisos
 RUN chown -R www-data:www-data /var/www/html
 
-EXPOSE 80
+EXPOSE ${PORT}
+
+
+# FROM php:8.2-apache
+
+# # Activar mod_rewrite (si lo usas)
+# RUN a2enmod rewrite
+
+# # Copiar tu proyecto al servidor Apache
+# COPY . /var/www/html/
+
+# # Establecer permisos
+# RUN chown -R www-data:www-data /var/www/html
+
+# EXPOSE 80
