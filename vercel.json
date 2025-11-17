@@ -1,7 +1,63 @@
 {
-    "functions" : {
-        "index.php" : {
-            "runtime" : "vercel-php@0.6.0"
+    "version": 2,
+    "functions": {
+        "*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "login/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "registro/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "requests/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "dashboard/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "me/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "store/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "tasks/*.php": {
+            "runtime": "vercel-php@0.6.0"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/register",
+            "destination": "/registro/register.php"
+        },
+        {
+            "source": "/logout",
+            "destination": "/logout.php"
+        },
+        {
+            "source": "/forgot_password",
+            "destination": "/forgot_password.php"
+        },
+        {
+            "source": "/change_password",
+            "destination": "/change_password.php"
+        },
+        {
+            "source": "/request/my",
+            "destination": "/requests/my.php"
+        },
+        {
+            "source": "/request/accepted",
+            "destination": "/requests/accepted.php"
+        },
+        {
+            "source": "/my/products",
+            "destination": "/store/my_products.php"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/$1"
+        }
+    ]
 }
