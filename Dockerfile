@@ -13,9 +13,8 @@ RUN a2enmod rewrite
 # Copiar el proyecto
 COPY . /var/www/html/
 
-# Copiar .htaccess
-RUN cp /var/www/html/.htaccess /var/www/html/.htaccess && \
-    chown -R www-data:www-data /var/www/html && \
+# Permisos
+RUN chown -R www-data:www-data /var/www/html && \
     chmod 755 /var/www/html
 
 # Crear script para manejar el PORT dinámico
