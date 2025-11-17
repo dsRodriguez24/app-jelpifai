@@ -72,7 +72,8 @@ const show_detail_request = (request) => {
         }).join('');
 
         carrousel_items = archivos.map( (archivo, index) => {
-            const url_archivo = files_exists ? `${BASE_URL_NODE_SERVER}uploads/${archivo.nombre_archivo}` : `${BASE_URL_FRONT}assets/img/elements/placeholder.png`;
+            const url_archivo = files_exists ? `${BASE_URL_SUPABASE_FILES}${archivo.nombre_archivo}` : `${BASE_URL_FRONT}assets/img/elements/placeholder.png`;
+            // const url_archivo = files_exists ? `${BASE_URL_NODE_SERVER}uploads/${archivo.nombre_archivo}` : `${BASE_URL_FRONT}assets/img/elements/placeholder.png`;
 
             return `<div class="carousel-item ${index === 0 ? 'active' : ''}">
                         <img class="d-block w-100 image-carrousel" src="${url_archivo}">

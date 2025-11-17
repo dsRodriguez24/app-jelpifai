@@ -139,6 +139,8 @@ const handler_submit_request = async () => {
         });
     
         const response  = await res.json();
+        console.log(response);
+        
         reset_modal_save();
         process_submit_request(response);
     } catch (error) {

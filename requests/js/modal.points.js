@@ -85,8 +85,8 @@ const handler_submit_points = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("form-points").addEventListener("submit", async (e) => {
+    document.getElementById("form-points").addEventListener("submit", (e) => {
         e.preventDefault();
-        await handler_submit_points();
+        handler_submit_points();
     })
 });

@@ -74,7 +74,8 @@ const add_fields_to_modal_update = (data) => {
 
             const html_files_uploaded_previously = archivos.map((file, index) => {
                 let { nombre_archivo, id } = file;
-                let url = `${BASE_URL_NODE_SERVER}uploads/${nombre_archivo}`; 
+                let url = `${BASE_URL_SUPABASE_FILES}${nombre_archivo}`; 
+                // let url = `${BASE_URL_NODE_SERVER}uploads/${nombre_archivo}`; 
 
                 const removeBtn     = `<i class='fas fa-times text-danger position-absolute top-0 end-0 m-1' onclick='delete_file_uploades_previously(${id})'></i>`;
                 return `

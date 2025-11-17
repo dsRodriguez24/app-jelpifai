@@ -79,7 +79,8 @@ const add_advances_to_modal = (data) => {
             nombre_voluntario       += usuario.apellido ? ` ${usuario.apellido}` : '';
 
             let fecha__hora_registro    =  new Date(fecha_registro).toLocaleString();
-            let url_archivo             = nombre_archivo ? `${BASE_URL_NODE_SERVER}uploads/${nombre_archivo}` : `#`;
+            let url_archivo             = nombre_archivo ? `${BASE_URL_SUPABASE_FILES}${nombre_archivo}` : `#`;
+            // let url_archivo             = nombre_archivo ? `${BASE_URL_NODE_SERVER}uploads/${nombre_archivo}` : `#`;
 
             return `<div class="col-12 d-flex justify-content-between">
                         <div>

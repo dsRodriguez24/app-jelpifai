@@ -56,6 +56,7 @@ require_once __DIR__ . "/php/helpers.php";
         const BASE_URL_HOST_NODE_SERVER   = `<?=$BASE_URL_HOST_NODE_SERVER?>`;
         const BASE_URL_NODE_SERVER        = `<?=$BASE_URL_NODE_SERVER?>`;
         const BASE_URL_FRONT              = `<?=$BASE_URL_FRONT?>`;
+        const BASE_URL_SUPABASE_FILES     = `<?=$BASE_URL_SUPABASE_FILES?>`;
     </script>
     <script src="<?= $BASE_URL_FRONT ?>js/validar_sesion.js"></script>
     <script src="<?= $BASE_URL_FRONT ?>js/header.js"></script>

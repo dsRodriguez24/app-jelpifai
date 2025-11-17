@@ -12,8 +12,9 @@ const process_requests = (data) => {
 
             let url_archivo = '';
             try {
-                let archivo_1 = archivos[0];
-                url_archivo = `${BASE_URL_NODE_SERVER}uploads/${archivo_1.nombre_archivo}`;
+                let archivo_1   = archivos[0];
+                url_archivo     = `${BASE_URL_SUPABASE_FILES}${archivo_1.nombre_archivo}`;
+                // url_archivo = `${BASE_URL_NODE_SERVER}uploads/${archivo_1.nombre_archivo}`;
             } catch (error) {
                 url_archivo = `${BASE_URL_FRONT}assets/img/elements/placeholder.png`;
             }

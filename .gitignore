@@ -31,6 +31,8 @@ node_modules
 # Optional npm cache directory
 .npm
 
+.json
+
 # Optional eslint cache
 .eslintcache
 

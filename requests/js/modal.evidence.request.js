@@ -115,6 +115,9 @@ const handler_save_evidence_request = async () => {
         const response                      = await res.json();
         const { error, data, message }      = response;
         
+        console.log( {response } );
+        
+
         if (error) {
             throw new Error(`Error backend ${message}` , error);
         }
