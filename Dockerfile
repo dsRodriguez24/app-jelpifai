@@ -19,11 +19,12 @@ RUN chown -R www-data:www-data /var/www/html && \
 
 # Crear script para manejar el PORT dinámico
 RUN echo '#!/bin/bash\n\
-sed -i "s/^Listen.*/Listen $PORT/" /etc/apache2/ports.conf\n\
-sed -i "s/<VirtualHost.*>/<VirtualHost *:$PORT>/" /etc/apache2/sites-available/000-default.conf\n\
+sed -i "s/^Listen.*/Listen \$PORT/" /etc/apache2/ports.conf\n\
+sed -i "s/<VirtualHost.*>/<VirtualHost *:\$PORT>/" /etc/apache2/sites-available/000-default.conf\n\
 exec apache2-foreground' > /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start.sh
 
 EXPOSE 8080
 
+# Start Apache
 CMD ["/usr/local/bin/start.sh"]
