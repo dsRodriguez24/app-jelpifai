@@ -7,7 +7,7 @@ Jelpifai es la aplicación web principal del proyecto y está acompañada por un
 
 ## 🔗 Despliegues
 - **App (Frontend):** https://jelpifai.sievensoft.com/
-- **API (endpoint de ejemplo):** https://rest-server-jelpifai.vercel.app/api/v1/me
+- **API (endpoint de ejemplo):** https://rest-server-jelpifai.vercel.app/api/v1
 - **Documentación de la API:** https://jelpifai.sievensoft.com/docs-api.html
 
 > ⚠️ Nota: Verifica las rutas y credenciales en tu entorno local antes de conectar con los despliegues.
