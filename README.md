@@ -3,7 +3,7 @@
 **Aplicación web + API REST**
 
 ## 🚀 Descripción
-Jelpifai es la aplicación web principal del proyecto y está acompañada por una API REST. Este repositorio contiene el frontend (PHP, JS, SCSS, assets) y la integración con la API.
+Jelpifai es la aplicación web principal del proyecto y está acompañada por una API REST. Este repositorio contiene el frontend (PHP, JS, assets) y la integración con la API.
 
 ## 🔗 Despliegues
 - **App (Frontend):** https://jelpifai.sievensoft.com/
@@ -47,7 +47,7 @@ Jelpifai es la aplicación web principal del proyecto y está acompañada por un
    O configurar un VirtualHost en Apache/Nginx.
 
 > 💡 Ajusta los pasos anteriores según la configuración real del proyecto (archivos de configuración, scripts de migración, etc.).
-
+<!-- 
 ## 📚 Documentación
 Puedes ver la documentación de la API en: `docs-api.html` o en la URL de despliegue indicada arriba.
 
@@ -63,4 +63,4 @@ Licencia: **MIT** (actualizar según corresponda).
 Para preguntas o soporte interno, añade tus datos de contacto aquí.
 
 ---
-*README generado automáticamente. Actualiza las secciones de configuración, pasos de instalación y licencia según la configuración real del proyecto.*
+*README generado automáticamente. Actualiza las secciones de configuración, pasos de instalación y licencia según la configuración real del proyecto.* -->
