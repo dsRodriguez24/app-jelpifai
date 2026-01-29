@@ -3,7 +3,7 @@
 **Aplicación web + API REST**
 
 ## 🚀 Descripción
-Jelpifai es la aplicación web principal del proyecto y está acompañada por una API REST. Este repositorio contiene el frontend (PHP, JS, assets) y la integración con la API.
+Jelpifai es la aplicación web principal de un proyecto educativo semestral y está acompañada por una API REST. Este repositorio contiene el frontend (PHP, JS, assets) y la integración con la API.
 
 ## 🔗 Despliegues
 - **App (Frontend):** https://jelpifai.sievensoft.com/
