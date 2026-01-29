@@ -6,7 +6,7 @@
 Jelpifai es la aplicación web principal de un proyecto educativo semestral y está acompañada por una API REST. Este repositorio contiene el frontend (PHP, JS, assets) y la integración con la API.
 
 ## 🔗 Despliegues
-- **App (Frontend):** https://jelpifai.sievensoft.com/
+- **App (Frontend):** https://jelpifai.sievensoft.com/about
 - **API (endpoint de ejemplo):** https://rest-server-jelpifai.vercel.app/api/v1
 - **Documentación de la API:** https://jelpifai.sievensoft.com/docs-api.html
 
